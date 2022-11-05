@@ -12,6 +12,7 @@ class Writer:
         self.time = time.localtime()
         self.image_index = 0
         self.folder = None
+        self.is_ok = True
         self.create_folder()
     
     def _print(self, *s):
@@ -22,8 +23,12 @@ class Writer:
         t = self.time
         folder = f'{t.tm_year:04d}-{t.tm_mon:02d}-{t.tm_mday:02d}T{t.tm_hour:02d}_{t.tm_min:02d}_{t.tm_sec:02d}'
         self.folder = os.path.join(DATA_DIR, folder)
-        os.mkdir(self.folder)
-        self._print('succesfully created folder', self.folder)
+        try:
+            os.mkdir(self.folder)
+            self._print('succesfully created folder', self.folder)
+        except FileNotFoundError:
+            self._print(f'Unable to create direcotry {self.folder}')
+            self.is_ok = False
 
     def add_image(self, img):
         # write the image to the folder
@@ -38,7 +43,10 @@ if __name__ == '__main__':
     import numpy as np
     m = np.zeros([100, 100, 3], dtype=np.uint8)
     w = Writer()
-    for i in range(255):
-        print(i)
-        m[0:50, 50:100, 1] = i
-        w.add_image(m)
+    if w.is_ok:
+        for i in range(255):
+            print(i)
+            m[0:50, 50:100, 1] = i
+            w.add_image(m)
+    else:
+        print('unit testing writer() failed')
