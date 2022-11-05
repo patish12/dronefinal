@@ -2,6 +2,7 @@
 
 from djitellopy import tello
 from defines import DEBUG
+import time
 
 class Drone:
     
@@ -40,6 +41,15 @@ class Drone:
         """"get next frame"""
         return self.me.get_frame_read().frame
 
+    def take_off(self):
+        pass
+
+    def land(self):
+        pass
+    
 if __name__ == '__main__':
     d = Drone()
     d.connect()
+    d.take_off()
+    time.sleep(5)
+    d.land()
