@@ -1,6 +1,6 @@
 # general defines
 
-from Enum import enum
+from enum import Enum
 
 class RunMode(Enum):
     ONLINE = 0
@@ -8,3 +8,5 @@ class RunMode(Enum):
     CREATE_VIDEO = 2
 
 STATE = RunMode.CREATE_VIDEO
+DEBUG = True
+DATA_DIR = 'data'
